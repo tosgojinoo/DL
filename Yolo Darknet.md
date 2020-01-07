@@ -41,8 +41,8 @@ darknet
 
 #### 참고) make & makefile
 shell 에서 컴파일 시, `make` 명령어로 `makefile` 컴파일 가능 <br>
-`make`는 파일 간의 종속관계를 파악하여 `makefile`에 적힌 대로 컴파일러에 명령, shell 명령이 순차적으로 실행될 수 있게 함 <br>
-장점
+`make`는 파일 간의 종속관계를 파악하여 `makefile`에 적힌 대로 컴파일러에 명령, shell 명령이 순차적으로 실행될 수 있게 함 <br><br>
+장점은,
 - 각 파일에 대한 반복적 명령의 자동화로 인한 시간 절약
 - 프로그램 종속 구조 빠르게 파악하여, 관리 용이
 - 단순 반복 작업, 재작성 최소화
@@ -96,7 +96,7 @@ char *backup_directory = "/home/pjreddie/backup/";
 	- anchors = (수정 입력)
 		- anchors 계산 :
 ```sh
-			darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416
+darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416
 ```
 	- 좌우 구별 감지 원할 경우
 		- flip (17번째 줄) = 0
@@ -111,22 +111,22 @@ backup = EXAMPLE1/backup/ # 중간 weights를 저장하는 경로
 - names 파일 생성
 	- class 0, 1, 2 ... 작성
 ```sh
-		bird
-		dog
-		cat
+bird
+dog
+cat
 ```
 - Training/Testing에 사용할 이미지 파일 저장
 	- 경로
 ```sh
-		build\darknet\x64\EXAMPLE1 (for win)
+build\darknet\x64\EXAMPLE1 (for win)
 ```
 	- Bounding Box 처리 완료된 이미지 사용
 	- [marking을 하는 툴](https://github.com/AlexeyAB/Yolo_mark)
 - 이미지 리스트의 상대 경로 적힌 txt 파일 생성(train.txt, test.txt)
 ```sh
-		EXAMPLE1/img1.jpg
-		EXAMPLE1/img2.jpg
-		EXAMPLE1/img3.jpg
+EXAMPLE1/img1.jpg
+EXAMPLE1/img2.jpg
+EXAMPLE1/img3.jpg
 ```
 - dark 폴더에서 make 실행
 - 다음 명령어 입력
@@ -138,7 +138,7 @@ backup = EXAMPLE1/backup/ # 중간 weights를 저장하는 경로
 ```sh
 ./darknet detector train .data .cfg .weights
 ```
-	- training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
+	* training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
 - training 후 성능 확인
 ```sh
 ./darknet detector map .data .cfg .weights
