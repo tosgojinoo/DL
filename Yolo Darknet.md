@@ -51,24 +51,6 @@ shell 에서 컴파일 시, `make` 명령어로 `makefile` 컴파일 가능 <br>
 `makefile` : 기술파일(script) <br><br>
 
 
-### Test
-- 명령어 구성
-```sh
-./(실행파일) (Darknet에서 지원하는 딥러닝 아키텍쳐 종류) (사용할 함수 이름) (설정파일) (가중치 파일, weights) (추가옵션)
-```
-
-- 단일 이미지 테스트
-```sh
-./darknet yolo test cfg/yolo.cfg yolo.weights data/dog.jpg
-```
-
-- 카메라 스트리밍 영상 혹은 동영상에 대한 테스트
-```sh
-./darknet yolo demo cfg/yolo.cfg yolo.weights -c<number> : 카메라 index number
-./darknet yolo demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
-```
-<br>
-
 ### Train
 - Yolo Darknet 폴더 안 scr/yolo.c 파일 내용
 ```sh
@@ -85,7 +67,8 @@ char *backup_directory = "/home/pjreddie/backup/";
 - 딥러닝 모델 생성(cfg 파일) 또는 수정
 	- batch = 64
 	- subdivision = 8
-	- height/width = (32의 배수, 클수록 정확도 향상)
+		- Out of memory 오류 시, subdivision 을 16, 32, 64 등으로 증가시킴
+	- height/width = (32의 배수, 608 or 832, 클수록 정확도 향상)
 	- class = (자신의 class 갯수로 수정)
 	- filters (class 위에 있음) = (classes + 5) * 3
 	- 다른 해상도에 대한 정확도 높힐 경우
@@ -131,7 +114,7 @@ EXAMPLE1/img3.jpg
 - dark 폴더에서 make 실행
 - 다음 명령어 입력
 ```sh
-./darknet yolo train cfg/yolo.cfg (pre-trained model)
+./darknet detector train cfg/yolo.cfg (pre-trained model)
 ```
 - Pre-trained Model 없을 시, 가중치는 자체적으로 초기화한 가중치 값 사용
 - 또는,
@@ -147,11 +130,43 @@ training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
 ```sh
 ./darknet detector train .data .cfg .weights -map
 ```
-
 <br>
 
+### Test
 
-### Usage
+- 명령어 구성
+```sh
+./(실행파일) (Darknet에서 지원하는 딥러닝 아키텍쳐 종류) (사용할 함수 이름) (설정파일) (가중치 파일, weights) (추가옵션)
+```
+
+- Image
+```sh
+./darknet detector test .data .cfg .weights -thresh THRESH OPTION
+./darknet detector test cfg/yolo.cfg yolo.weights data/dog.jpg
+```
+<br>
+	- Option
+	`-ext_output` : Output coordinates
+	`-i 1` : Use GPU 1
+	`thresh 0.25 -dont_show -save_labels < list.txt` : List of Image에 대한 결과 저장
+
+- Video
+```sh
+./darknet detector demo .data .cfg .weights .videofile OPTION
+./darknet detector demo cfg/yolo.cfg yolo.weights -c <number> : 카메라 index number
+./darknet detector demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
+```
+<br>
+	- Option
+	`-c 0` : WebCam 0
+	`http://주소` : Net-videocam
+	`-out_filename OUT.videofile` : 결과 저장
+
+- Check accuracy mAP@IoU=75
+```sh
+./darknet detector map .data .cfg .weights -iou_thresh 0.75
+```
+
 
 
 
