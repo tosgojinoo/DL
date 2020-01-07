@@ -98,10 +98,10 @@ char *backup_directory = "/home/pjreddie/backup/";
 ```sh
 darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416
 ```
-
+<br>
 	- 좌우 구별 감지 원할 경우
 		- flip (17번째 줄) = 0
-		
+
 - data 파일 생성
 ```sh
 classes = 3 
