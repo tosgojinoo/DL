@@ -15,7 +15,7 @@
 ```sh
 darknet
   |
-  |- cfg /
+  |- cfg/
   |- data/
   |- LICENSE
   |- Makefile
@@ -64,9 +64,9 @@ char *train_images = "/data/voc/train.txt";
 char *backup_directory = "/home/pjreddie/backup/";
 ```
 
-`char *voc_names[]` : 클래스 이름 설정 변수
-`char *train_images` : 학습할 image들의 list.txt파일 위치
-`char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일
+	- `char *voc_names[]` : 클래스 이름 설정 변수
+	- `char *train_images` : 학습할 image들의 list.txt파일 위치
+	- `char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일
 
 
 
