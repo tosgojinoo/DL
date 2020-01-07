@@ -47,8 +47,8 @@ shell 에서 컴파일 시, `make` 명령어로 `makefile` 컴파일 가능 <br>
 - 프로그램 종속 구조 빠르게 파악하여, 관리 용이
 - 단순 반복 작업, 재작성 최소화
 
-`make` : 파일 관리 유틸리티
-`makefile` : 기술파일(script)
+`make` : 파일 관리 유틸리티 <br>
+`makefile` : 기술파일(script) <br>
 
 
 ### Test
@@ -78,7 +78,7 @@ char *backup_directory = "/home/pjreddie/backup/";
 
 `char *voc_names[]` : 클래스 이름 설정 변수 <br>
 `char *train_images` : 학습할 image들의 list.txt파일 위치 <br>
-`char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일 <br>
+`char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일 <br><br>
 
 - 용도에 맞게 위 내용 변경
 - 딥러닝 모델 생성(cfg 파일)
