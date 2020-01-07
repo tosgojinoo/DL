@@ -95,10 +95,8 @@ char *backup_directory = "/home/pjreddie/backup/";
 		- stride (717번째 줄) = 4
 	- anchors = (수정 입력)
 		- anchors 계산 :
-```sh
-darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416
-```
-<br>
+`darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416`
+
 	- 좌우 구별 감지 원할 경우
 		- flip (17번째 줄) = 0
 
