@@ -51,7 +51,11 @@ darknet
 ./darknet yolo test cfg/yolo.cfg yolo.weights data/dog.jpg
 ~~~
 
-
+- 카메라 스트리밍 영상 혹은 동영상에 대한 테스트
+~~~sh
+./darknet yolo demo cfg/yolo.cfg yolo.weights -c<number> : 카메라 index number
+./darknet yolo demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
+~~~sh
 
 
 
