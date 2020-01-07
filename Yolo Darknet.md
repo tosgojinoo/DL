@@ -12,7 +12,7 @@
 ### Install
 - [소스 확인](https://github.com/pjreddie/darknet)
 - 폴더 구조
-'''sh
+~~~sh
 darknet
   |
   |- cfg /
@@ -24,7 +24,7 @@ darknet
   |-results/
   |-scripts/ 
   |-src/
-'''
+~~~
 - Makefile
 	- CUDA 설치시, GPU=1
 	- OpenCV 설치시, OPENCV=1
