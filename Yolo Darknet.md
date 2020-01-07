@@ -10,7 +10,7 @@
 - CUDA
 
 ### Install
-- 소스 확인(https://github.com/pjreddie/darknet)
+- [소스 확인](https://github.com/pjreddie/darknet)
 - 폴더 구조
 '''sh
 darknet
