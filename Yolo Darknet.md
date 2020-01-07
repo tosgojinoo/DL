@@ -36,3 +36,35 @@ darknet
 		- CC                 -> C Compiler
 		- LDFLAGS            -> linker option
 		- CFLAGS             -> compile option
+- 설정 완료 후, 터미널창에 make 명령어 입력하여 코드 Complile
+- 완료되면, darknet 실행파일 생성
+
+### Test
+
+- 명령어 구성
+~~~sh
+./(실행파일) (Darknet에서 지원하는 딥러닝 아키텍쳐 종류) (사용할 함수 이름) (설정파일) (가중치 파일, weights) (추가옵션)
+~~~
+
+- 단일 이미지 테스트
+~~~sh
+./darknet yolo test cfg/yolo.cfg yolo.weights data/dog.jpg
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
