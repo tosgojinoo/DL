@@ -99,11 +99,7 @@ dog
 cat
 ```
 - Training/Testing에 사용할 이미지 파일 저장
-	- 경로
-```sh
-build\darknet\x64\EXAMPLE1 (for win)
-```
-<br><br>
+	- 경로 : `build\darknet\x64\EXAMPLE1 (for win)`
 	- Bounding Box 처리 완료된 이미지 사용
 	- [marking을 하는 툴](https://github.com/AlexeyAB/Yolo_mark)
 - 이미지 리스트의 상대 경로 적힌 txt 파일 생성(train.txt, test.txt)
@@ -115,14 +111,11 @@ EXAMPLE1/img3.jpg
 - dark 폴더에서 make 실행
 - 다음 명령어 입력
 ```sh
+./darknet detector train .data .cfg .weights
 ./darknet detector train cfg/yolo.cfg (pre-trained model)
 ```
 - Pre-trained Model 없을 시, 가중치는 자체적으로 초기화한 가중치 값 사용
-- 또는,
-```sh
-./darknet detector train .data .cfg .weights
-```
-training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
+	- training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
 - training 후 성능 확인
 ```sh
 ./darknet detector map .data .cfg .weights
@@ -145,8 +138,7 @@ training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
 ./darknet detector test .data .cfg .weights -thresh THRESH OPTION
 ./darknet detector test cfg/yolo.cfg yolo.weights data/dog.jpg
 ```
-<br><br>
-	- Option<br>
+Option<br>
 `-ext_output` : Output coordinates<br>
 `-i 1` : Use GPU 1<br>
 `thresh 0.25 -dont_show -save_labels < list.txt` : List of Image에 대한 결과 저장<br>
@@ -158,8 +150,7 @@ training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
 ./darknet detector demo cfg/yolo.cfg yolo.weights -c <number> : 카메라 index number
 ./darknet detector demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
 ```
-<br><br>
-	- Option<br>
+Option<br>
 	`-c 0` : WebCam 0<br>
 	`http://주소` : Net-videocam<br>
 	`-out_filename OUT.videofile` : 결과 저장<br>
