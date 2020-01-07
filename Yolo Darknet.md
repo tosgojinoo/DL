@@ -138,7 +138,7 @@ EXAMPLE1/img3.jpg
 ```sh
 ./darknet detector train .data .cfg .weights
 ```
-	* training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
+training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
 - training 후 성능 확인
 ```sh
 ./darknet detector map .data .cfg .weights
