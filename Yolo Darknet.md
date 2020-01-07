@@ -30,12 +30,12 @@ darknet
 	- OpenCV 설치시, OPENCV=1
 	- 둘다 미설치시, 0
 	- 추가
-		- NVCC=nvcc          -> CUDA compiler
-		- VPATH=./src/       -> 소스코드 위치
-		- EXEC               -> 실행 파일 명
-		- CC                 -> C Compiler
-		- LDFLAGS            -> linker option
-		- CFLAGS             -> compile option
+		- `NVCC=nvcc`          -> CUDA compiler
+		- `VPATH=./src/`       -> 소스코드 위치
+		- `EXEC`               -> 실행 파일 명
+		- `CC`                 -> C Compiler
+		- `LDFLAGS`            -> linker option
+		- `CFLAGS`             -> compile option
 - 설정 완료 후, 터미널창에 make 명령어 입력하여 코드 Complile
 - 완료되면, darknet 실행파일 생성
 
@@ -58,12 +58,15 @@ darknet
 
 ### Train
 - Yolo Darknet 폴더 안 scr/yolo.c 파일 내용
-```
-char *voc_names[] = {"aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", 
-"diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"};
+```sh
+char *voc_names[] = {"aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"};
 char *train_images = "/data/voc/train.txt";
 char *backup_directory = "/home/pjreddie/backup/";
 ```
+	- `char *voc_names[]` : 클래스 이름 설정 변수
+	- `char *train_images` : 학습할 image들의 list.txt파일 위치
+	- `char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일
+
 
 
 
