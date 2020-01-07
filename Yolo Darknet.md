@@ -55,7 +55,7 @@ darknet
 ~~~sh
 ./darknet yolo demo cfg/yolo.cfg yolo.weights -c<number> : 카메라 index number
 ./darknet yolo demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
-~~~sh
+~~~
 
 
 
