@@ -144,11 +144,11 @@ training 시 Loss-window 없애려면 <code>-dont_show</code> 옵션 설정
 ./darknet detector test .data .cfg .weights -thresh THRESH OPTION
 ./darknet detector test cfg/yolo.cfg yolo.weights data/dog.jpg
 ```
-<br>
-	- Option<br>
-	`-ext_output` : Output coordinates<br>
-	`-i 1` : Use GPU 1<br>
-	`thresh 0.25 -dont_show -save_labels < list.txt` : List of Image에 대한 결과 저장<br>
+
+* Option
+`-ext_output` : Output coordinates<br>
+`-i 1` : Use GPU 1<br>
+`thresh 0.25 -dont_show -save_labels < list.txt` : List of Image에 대한 결과 저장<br>
 <br>
 
 - Video
