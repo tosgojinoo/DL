@@ -101,7 +101,7 @@ cat
 - Training/Testing에 사용할 이미지 파일 저장
 	- 경로 : `build\darknet\x64\EXAMPLE1 (for win)`
 	- Bounding Box 처리 완료된 이미지 사용
-	- [marking을 하는 툴](https://github.com/AlexeyAB/Yolo_mark)
+	- [Marking 툴](https://github.com/AlexeyAB/Yolo_mark)
 - 이미지 리스트의 상대 경로 적힌 txt 파일 생성(train.txt, test.txt)
 ```sh
 EXAMPLE1/img1.jpg
