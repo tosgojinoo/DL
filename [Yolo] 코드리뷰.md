@@ -20,32 +20,32 @@ darknet
   |- scripts/ 
   |- src/
 ```
-`cfg`(configure) : 모델 튜닝, 데이터 적용
++ `cfg`(configure) : 모델 튜닝, 데이터 적용
   + coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등
-`data` : bounding box 그릴때 필요한 label들의 폰트, label list, test image
++ `data` : bounding box 그릴때 필요한 label들의 폰트, label list, test image
   + coco.names : 기본 데이터셋인 coco.data 의 class 확인 가능 (80개)
-`src`(source) : c 코드, 헤더파일 등
++ `src`(source) : c 코드, 헤더파일 등
   + image.c : bounding box의 좌표에 대한 코드 <br>
 
 ## Makefile
 콘솔 응용프로그램에서는 main 부터 찾는 것이 편함 <br>
 makefile 확인하여 main 포함된 소스코드 확인 가능 <br>
-`GPU=1` : CUDA 설치 시 1, 미설치 0 <br>
-`OPENCV=1` : CUDA 설치 시 1, 미설치 0 <br>
++ `GPU=1` : CUDA 설치 시 1, 미설치 0 <br>
++ `OPENCV=1` : CUDA 설치 시 1, 미설치 0 <br>
 
-`VPATH=./src/:./examples` : 경로 설정, 소스파일 위치, examples <br>
-`EXEC=darknet` : main source file (int main) 명 <br>
-`OBJDIR=./obj/` : build 시 생성되는 object 파일들은 해당 경로에 출력됨 <br>
++ `VPATH=./src/:./examples` : 경로 설정, 소스파일 위치, examples <br>
++ `EXEC=darknet` : main source file (int main) 명 <br>
++ `OBJDIR=./obj/` : build 시 생성되는 object 파일들은 해당 경로에 출력됨 <br>
 
-`CC` : C Compiler <br>
-`NVCC=nvcc` : CUDA compiler <br>
-`LDFLAGS` : linker option <br>
-`CFLAGS` : compile option <br> <br>
++ `CC` : C Compiler <br>
++ `NVCC=nvcc` : CUDA compiler <br>
++ `LDFLAGS` : linker option <br>
++ `CFLAGS` : compile option <br> <br>
 
 
 
 ## darknet/src/Darknet.c (Main source)
-`detect` : 단일/멀티 이미지용, `test_detector` 함수 실행(detector.c 내부에 있음) <br>
++ `detect` : 단일/멀티 이미지용, `test_detector` 함수 실행(detector.c 내부에 있음) <br>
   + *Option*<br>
     + `-ext_output` : 결과에 대한 상세 정보 표시<br>
     + `-i 1` : Use GPU 1 <br>
@@ -55,7 +55,7 @@ makefile 확인하여 main 포함된 소스코드 확인 가능 <br>
       + 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능 <br>
     + List of Image에 대한 결과 저장 <br> <br>
 
-`detector` : 동영상용 <br> <br>
++ `detector` : 동영상용 <br> <br>
 
 
 
