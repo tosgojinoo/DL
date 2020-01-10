@@ -1,9 +1,9 @@
 # Yolo Darknet
 
 ## 참고
-- [Yolo Darknet page](https://pjreddie.com/darknet/yolo/)
-- yolo v3 저자 [pjreddie](https://github.com/pjreddie/darknet)
-- 부가기능 사용시 [AlexeyAB](https://github.com/AlexeyAB/darknet)
+[Yolo Darknet page](https://pjreddie.com/darknet/yolo/)
+[pjreddie](https://github.com/pjreddie/darknet)
+[AlexeyAB](https://github.com/AlexeyAB/darknet)
 
 
 ## Pre-requirement
@@ -145,20 +145,10 @@ EXAMPLE1/img3.jpg
 <br>
 
 ### Test
-- obj_test.cfg 생성
-	- obj.cfg 를 변형
-	- batch 및 subdivisions 사이즈 1로 조정
-	- 결과 향상 위해 width/height 를 608 로 변경
 
 - 명령어 구성
 ```sh
 ./(실행파일) (Darknet에서 지원하는 딥러닝 아키텍쳐 종류) (사용할 함수 이름) (설정파일) (가중치 파일, weights) (추가옵션)
-```
-=> test.sh 생성됨
-
-- test.sh 실행
-```sh
-$ ./obj_test.sh
 ```
 
 - Image
@@ -189,33 +179,16 @@ Option<br>
 ./darknet detector map .data .cfg .weights -iou_thresh 0.75
 ```
 
-### log
-학습시 생성된 log 확인
-[마지막 부분]
-- Region 82
-	- 가장 큰 Mask, Prediction Scale 을 이용하는 레이어이지만 작은 객체를 예측 할 수 있음
-- Region 94
-	- 중간 단계 Mask 
-- Region 106
-	- 가장 작은 Mask, Prediction Scale 을 이용하는 레이어이지만 마스크가 작을 수록 큰 객체 예측 가능
-- Avg IOU 
-	- 현재의 subdivision에서 이미지의 평균 IoU
-	- 실제 GT와 예측된 bounding box의 교차율을 뜻함
-	- 1에 가까울 수록 좋음
-- Class : 1에 가까운 값일 수록 학습이 잘 되고 있다는 것
-- No Obj : 값이 0이 아닌 작은 값이어야 함
-- .5R : recall/conut 
-- .75R : 0.000000
-- count : 현재 subdivision 이미지들에서 positive sample 들을 포함한 이미지의 수 
 
-[중간 부분]
-- loss avg 확인 필요(3열)
-	- iteration 이 증가할 수록 loss avg 값 감소
-	- 중간에 계속 증가할 경우 문제됨
-	- 많은 데이터의 경우 loss 값이 3.xxx 까지 떨어지며 더 이상 감소하지 않는 현상 발생
-	- 적은 데이터의 경우 loss 값이 0.6 정도나 그 이하까지 감소 가능
-	- 더 이상 Loss 값이 떨어지지 않을 때 학습 정지
-	- 권장 iteration (= 클래스 수 * 2000) 만큼 학습 추천
+
+
+
+
+
+
+
+
+
 
 
 

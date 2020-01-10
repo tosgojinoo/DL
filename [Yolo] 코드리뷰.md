@@ -21,49 +21,16 @@ darknet
   |- src/
 ```
 `cfg`(configure) : 모델 튜닝, 데이터 적용 
-- coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등 <br>
+    - coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등 <br>
 `data` : bounding box 그릴때 필요한 label들의 폰트, label list, test image
-- coco.names : 기본 데이터셋인 coco.data 의 class 확인 가능 (80개) <br>
+    - coco.names : 기본 데이터셋인 coco.data 의 class 확인 가능 (80개) <br>
 `src`(source) : c 코드, 헤더파일 등
-- image.c : bounding box의 좌표에 대한 코드 <br>
+    - image.c : bounding box의 좌표에 대한 코드 <br>
 
 
 ## Makefile
 콘솔 응용프로그램에서는 main 부터 찾는 것이 편함
 makefile 확인하여 main 포함된 소스코드 확인 가능
-```C++
-GPU=0
-CUDNN=0
-OPENCV=0
-OPENMP=0
-DEBUG=0
- 
-ARCH= -gencode arch=compute_30,code=sm_30 \
-      -gencode arch=compute_35,code=sm_35 \
-      -gencode arch=compute_50,code=[sm_50,compute_50] \
-      -gencode arch=compute_52,code=[sm_52,compute_52]
-#      -gencode arch=compute_20,code=[sm_20,sm_21] \ This one is deprecated?
- 
-# This is what I use, uncomment if you know your arch and want to specify
-# ARCH= -gencode arch=compute_52,code=compute_52
- 
-VPATH=./src/:./examples
-SLIB=libdarknet.so
-ALIB=libdarknet.a
-EXEC=darknet
-OBJDIR=./obj/
- 
-CC=gcc
-CPP=g++
-NVCC=nvcc 
-AR=ar
-ARFLAGS=rcs
-OPTS=-Ofast
-LDFLAGS= -lm -pthread 
-COMMON= -Iinclude/ -Isrc/
-CFLAGS=-Wall -Wno-unused-result -Wno-unknown-pragmas -Wfatal-errors -fPIC
-```
-
 `GPU=1` : CUDA 설치 시 1, 미설치 0 <br>
 `OPENCV=1` : CUDA 설치 시 1, 미설치 0 <br>
 
@@ -79,121 +46,15 @@ CFLAGS=-Wall -Wno-unused-result -Wno-unknown-pragmas -Wfatal-errors -fPIC
 
 
 ## darknet/src/Darknet.c (Main source)
-
-```C++
-int main(int argc, char **argv)
-{
-    //test_resize("data/bad.jpg");
-    //test_box();
-    //test_convolutional_layer();
-    if(argc < 2){
-        fprintf(stderr, "usage: %s <function>\n", argv[0]);
-        return 0;
-    }
-    gpu_index = find_int_arg(argc, argv, "-i", 0);
-    if(find_arg(argc, argv, "-nogpu")) {
-        gpu_index = -1;
-    }
-
-#ifndef GPU
-    gpu_index = -1;
-#else
-    if(gpu_index >= 0){
-        cuda_set_device(gpu_index);
-    }
-#endif
-
-    if (0 == strcmp(argv[1], "average")){
-        average(argc, argv);
-    } else if (0 == strcmp(argv[1], "yolo")){
-        run_yolo(argc, argv);
-    } else if (0 == strcmp(argv[1], "super")){
-        run_super(argc, argv);
-    } else if (0 == strcmp(argv[1], "lsd")){
-        run_lsd(argc, argv);
-    } else if (0 == strcmp(argv[1], "detector")){
-        run_detector(argc, argv);
-    } else if (0 == strcmp(argv[1], "detect")){
-        float thresh = find_float_arg(argc, argv, "-thresh", .5);
-        char *filename = (argc > 4) ? argv[4]: 0;
-        char *outfile = find_char_arg(argc, argv, "-out", 0);
-        int fullscreen = find_arg(argc, argv, "-fullscreen");
-        test_detector("cfg/coco.data", argv[2], argv[3], filename, thresh, .5, outfile, fullscreen);
-    } else if (0 == strcmp(argv[1], "cifar")){
-        run_cifar(argc, argv);
-    } else if (0 == strcmp(argv[1], "go")){
-        run_go(argc, argv);
-    } else if (0 == strcmp(argv[1], "rnn")){
-        run_char_rnn(argc, argv);
-    } else if (0 == strcmp(argv[1], "coco")){
-        run_coco(argc, argv);
-    } else if (0 == strcmp(argv[1], "classify")){
-        predict_classifier("cfg/imagenet1k.data", argv[2], argv[3], argv[4], 5);
-    } else if (0 == strcmp(argv[1], "classifier")){
-        run_classifier(argc, argv);
-    } else if (0 == strcmp(argv[1], "regressor")){
-        run_regressor(argc, argv);
-    } else if (0 == strcmp(argv[1], "isegmenter")){
-        run_isegmenter(argc, argv);
-    } else if (0 == strcmp(argv[1], "segmenter")){
-        run_segmenter(argc, argv);
-    } else if (0 == strcmp(argv[1], "art")){
-        run_art(argc, argv);
-    } else if (0 == strcmp(argv[1], "tag")){
-        run_tag(argc, argv);
-    } else if (0 == strcmp(argv[1], "3d")){
-        composite_3d(argv[2], argv[3], argv[4], (argc > 5) ? atof(argv[5]) : 0);
-    } else if (0 == strcmp(argv[1], "test")){
-        test_resize(argv[2]);
-    } else if (0 == strcmp(argv[1], "nightmare")){
-        run_nightmare(argc, argv);
-    } else if (0 == strcmp(argv[1], "rgbgr")){
-        rgbgr_net(argv[2], argv[3], argv[4]);
-    } else if (0 == strcmp(argv[1], "reset")){
-        reset_normalize_net(argv[2], argv[3], argv[4]);
-    } else if (0 == strcmp(argv[1], "denormalize")){
-        denormalize_net(argv[2], argv[3], argv[4]);
-    } else if (0 == strcmp(argv[1], "statistics")){
-        statistics_net(argv[2], argv[3]);
-    } else if (0 == strcmp(argv[1], "normalize")){
-        normalize_net(argv[2], argv[3], argv[4]);
-    } else if (0 == strcmp(argv[1], "rescale")){
-        rescale_net(argv[2], argv[3], argv[4]);
-    } else if (0 == strcmp(argv[1], "ops")){
-        operations(argv[2]);
-    } else if (0 == strcmp(argv[1], "speed")){
-        speed(argv[2], (argc > 3 && argv[3]) ? atoi(argv[3]) : 0);
-    } else if (0 == strcmp(argv[1], "oneoff")){
-        oneoff(argv[2], argv[3], argv[4]);
-    } else if (0 == strcmp(argv[1], "oneoff2")){
-        oneoff2(argv[2], argv[3], argv[4], atoi(argv[5]));
-    } else if (0 == strcmp(argv[1], "print")){
-        print_weights(argv[2], argv[3], atoi(argv[4]));
-    } else if (0 == strcmp(argv[1], "partial")){
-        partial(argv[2], argv[3], argv[4], atoi(argv[5]));
-    } else if (0 == strcmp(argv[1], "average")){
-        average(argc, argv);
-    } else if (0 == strcmp(argv[1], "visualize")){
-        visualize(argv[2], (argc > 3) ? argv[3] : 0);
-    } else if (0 == strcmp(argv[1], "mkimg")){
-        mkimg(argv[2], argv[3], atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), argv[7]);
-    } else if (0 == strcmp(argv[1], "imtest")){
-        test_resize(argv[2]);
-    } else {
-        fprintf(stderr, "Not an option: %s\n", argv[1]);
-    }
-    return 0;
-}
-```
 `detect` : 단일/멀티 이미지용, `test_detector` 함수 실행(detector.c 내부에 있음) <br>
 *Option*<br>
 `-ext_output` : 결과에 대한 상세 정보 표시<br>
 `-i 1` : Use GPU 1<br>
 `thresh 0.25 -dont_show -save_labels < list.txt` : 
-- YOLO 임계치 조정
-- 원래 25% 이상인 물체만 표시
-- 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능
-- List of Image에 대한 결과 저장 <br> <br>
+    - YOLO 임계치 조정
+    - 원래 25% 이상인 물체만 표시
+    - 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능
+    - List of Image에 대한 결과 저장 <br> <br>
 
 `detector` : 동영상용 <br> <br>
 
@@ -205,41 +66,105 @@ int main(int argc, char **argv)
 
 
 
-
-
 ## yolo.c
-```cpp
-char *voc_names[] = {"aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"};
-char *train_images = "/data/voc/train.txt";
-char *backup_directory = "/home/pjreddie/backup/";
-```
-
-
 `char *voc_names[]` : 클래스 이름 설정 변수 <br>
 `char *train_images` : 학습할 image들의 list.txt파일 위치 <br>
 `char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일 <br><br>
 
 
 
-## .cfg
-```sh
+## (obj).cfg
+모델 구조 및 train과 관련된 설정 포함
 
-```
+[data feed] <br>
 `batch = 64` <br>
-`subdivision = 8` Out of memory 오류 시, subdivision 을 16, 32, 64 등으로 증가시킴 <br>
-`height/width = `(32의 배수, 608 or 832, 클수록 정확도 향상) <br>
-`class = (자신의 class 갯수로 수정)` <br>
-`filters (class 위에 있음) = (classes + 5) * 3` <br>
+`subdivision = 8` <br>
+    - Cuda memory 관련 <br>
+    - 배치 사이즈를 얼마나 쪼개서 학습할 것인지에 대한 설정
+    - Out of memory 오류 시, subdivision 을 16, 32, 64 등으로 증가시킴 <br>
+`height/width = 416`(32의 배수, 608 or 832 추천, 클수록 정확도 향상) <br>
+
+[augmentation]
+`angle`: 이미지 회전 정도 설정, 보통은 0, 경우에 따라 90도 가능 <br>
+`saturation` : 채도 추가 원할 때 설정 <br>
+`expose` : 노출 값 추가 원할 때 설정 <br>
+`hue` : 색상 변경 원할 때 설정 <br>
+
+[training] <br>
+`learning rate = 0.001`  <br>
+    - muti-gpu 사용 시 학습율 0.001/gpu 수만큼 조절하기도 함 <br>
+`burn_in = 1000` <br>
+    - multi-gpu 사용 시 몇 만큼의 iteration 지날 때 마다 학습률을 조장 할 것인지 설정 <br>
+    - multi-gpu 사용 시 1000 * gpu 수 만큼 조절 <br>
+`max_batches` <br>
+    - 언제까지 iteration 돌릴 것인지 설정 <br>
+    - 보통 classes * 2000(또는 넉넉하게 4000) + 200 <br>
+    - 뒤에 붙은 200은 전/후로 알맞은 가중치 얻기 위함 <br>
+`policy` = (보통 steps) <br>
+`steps` <br>
+    - max_batches 사이즈(200을 더하지 않은 값)의 80%/90% 를 설정 <br>
+`scales = 1.1` <br>
+
+[network] <br>
+`class = `(자신의 class 갯수로 수정) <br>
+`filters = `(classes + 4 + 1) * 3 <br>
 - 다른 해상도에 대한 정확도 높힐 경우 <br>
 - random (파일 맨 아래) = 1  <br>
-`Small Object(416*416으로 Resizing 했을때 16*16보다 작은 경우)` <br>
+`Small Object` (416*416으로 Resizing 했을때 16*16보다 작은 경우) <br>
 `layers (720번째 줄) = -1, 11` <br>
 `stride (717번째 줄) = 4` <br>
-`anchors = (수정 입력)` <br>
-- anchors 계산 : <br>
-`darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416` <br>
-`flip (17번째 줄) = 0` : 좌우 구별 감지 원할 경우
- <br> <br>
+`flip (17번째 줄) = 0` : 좌우 구별 감지 원할 경우 <br>
+`mask` <br>
+`anchors = `(수정 입력) <br>
+    - anchors 계산 : <br>
+`darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416` <br> <br>
+
+## (obj).data
+학습을 위한 내용 포함
+- `class = (자신의 class 갯수로 수정)` <br>
+- train.txt, valid.txt, obj.names, weight 저장 폴더 경로 <br>
+- backup : iteration 거치면서 weight 가 저장 될 폴더 <br> <br>
+
+
+## (obj).names
+Annotation 에 포함되어 있는, 검출 대상 목록 <br> <br>
+
+
+## train/valid.txt
+학습 대상 또는 validation 이미지 경로가 담긴 리스트 <br> <br>
+train.txt 생성 코드
+```python
+import glob 
+def file_path_save():
+    filenames = []
+    files = sorted(glob.glob("./obj/*.jpg"))
+    for i in range(len(files)):
+        f = open("./train.txt", 'a')
+        f.write(files[i] + "\n")
+if __name__ == '__main__':
+    file_path_save()
+```
+
+
+## images (폴더)
+학습시킬 이미지들
+png or jpg
+train/valid image 필요 <br> <br>
+
+
+## annotation (images 폴더에 함께 위치)
+학습시킬 이미지들에 대한 주석
+`[class id] [center_x] [center_y] [w] [h]` <br>
+각 이미지마다 주석들이 담긴 텍스트 파일 필요 <br> <br>
+
+
+
+## weight file
+Pre-trained model 또는 기본적으로 darknet53.conv.74 등의 가중치 파일
+Fine-tuning을 위해 맨 아래 레이어를 제거(AlexeyAB darknet에 내장)한 가중치 파일을 사용할 수도 있음
+partial 을 이용하여 마지막 레이어 삭제 후 가중치 파일 생성 <br> <br>
+
+
 
 
 
