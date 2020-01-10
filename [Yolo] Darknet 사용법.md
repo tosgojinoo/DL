@@ -77,7 +77,7 @@ char *voc_names[] = {"aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "c
 char *train_images = "/data/voc/train.txt";
 char *backup_directory = "/home/pjreddie/backup/";
 ```
-
++
 	+ `char *voc_names[]` : 클래스 이름 설정 변수 
 	+ `char *train_images` : 학습할 image들의 list.txt파일 위치 
 	+ `char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일 
@@ -167,6 +167,7 @@ $ ./obj_test.sh
 ./darknet detector test .data .cfg .weights -thresh THRESH OPTION
 ./darknet detector test cfg/yolo.cfg yolo.weights data/dog.jpg
 ```
++ 
 	+ *Option*
 		+ `-ext_output` : Output coordinates
 		+ `-i 1` : Use GPU 1
@@ -179,6 +180,7 @@ $ ./obj_test.sh
 ./darknet detector demo cfg/yolo.cfg yolo.weights -c <number> : 카메라 index number
 ./darknet detector demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
 ```
++ 
 	+ *Option*
 		+ `-c 0` : WebCam 0
 		+ `http://주소` : Net-videocam
