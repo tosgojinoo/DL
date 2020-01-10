@@ -21,12 +21,11 @@ darknet
   |- src/
 ```
 `cfg`(configure) : 모델 튜닝, 데이터 적용 <br>
-    + coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등 <br>
+  + coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등 <br>
 `data` : bounding box 그릴때 필요한 label들의 폰트, label list, test image <br>
-    + coco.names : 기본 데이터셋인 coco.data 의 class 확인 가능 (80개) <br>
+  + coco.names : 기본 데이터셋인 coco.data 의 class 확인 가능 (80개) <br>
 `src`(source) : c 코드, 헤더파일 등 <br>
-    + image.c : bounding box의 좌표에 대한 코드 <br>
-
+  + image.c : bounding box의 좌표에 대한 코드 <br>
 
 ## Makefile
 콘솔 응용프로그램에서는 main 부터 찾는 것이 편함 <br>
@@ -47,14 +46,14 @@ makefile 확인하여 main 포함된 소스코드 확인 가능 <br>
 
 ## darknet/src/Darknet.c (Main source)
 `detect` : 단일/멀티 이미지용, `test_detector` 함수 실행(detector.c 내부에 있음) <br>
-  *Option*<br>
-  + `-ext_output` : 결과에 대한 상세 정보 표시<br>
-  + `-i 1` : Use GPU 1 <br>
-  + `thresh 0.25 -dont_show -save_labels < list.txt` :  <br>
-  + YOLO 임계치 조정 <br>
-  + 원래 25% 이상인 물체만 표시 <br>
-  + 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능 <br>
-  + List of Image에 대한 결과 저장 <br> <br>
+  + *Option*<br>
+    + `-ext_output` : 결과에 대한 상세 정보 표시<br>
+    + `-i 1` : Use GPU 1 <br>
+    + `thresh 0.25 -dont_show -save_labels < list.txt` : 
+      + YOLO 임계치 조정 <br>
+      + 원래 25% 이상인 물체만 표시 <br>
+      + 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능 <br>
+    + List of Image에 대한 결과 저장 <br> <br>
 
 `detector` : 동영상용 <br> <br>
 
