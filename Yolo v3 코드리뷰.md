@@ -4,7 +4,32 @@
 - [소스 확인](https://github.com/pjreddie/darknet)
 - C언어로 구성
 
+## 폴더 구조
+```sh
+darknet
+  |
+  |- backup/
+  |- cfg/
+  |- data/
+  |- examples/
+  |- LICENSE
+  |- Makefile
+  |- obj/
+  |- README.md
+  |- results/
+  |- scripts/ 
+  |- src/
+```
+`cfg`(configure) : 모델 튜닝, 데이터 적용 
+- coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등
+`data` : 분석 대상
+- coco.names : class 확인 가능 (80개)
+
+
+
 ## Makefile
+콘솔 응용프로그램에서는 main 부터 찾는 것이 편함
+makefile 확인하여 main 포함된 소스코드 확인 가능
 ```C++
 GPU=0
 CUDNN=0
@@ -41,8 +66,9 @@ CFLAGS=-Wall -Wno-unused-result -Wno-unknown-pragmas -Wfatal-errors -fPIC
 `GPU=1` : CUDA 설치 시 1, 미설치 0 <br>
 `OPENCV=1` : CUDA 설치 시 1, 미설치 0 <br>
 
-`VPATH=./src/:./examples` : 경로 설정, 소스코드 위치 src 또는 examples <br>
-`EXEC=darknet` : 실행파일 (int main) 명 <br>
+`VPATH=./src/:./examples` : 경로 설정, 소스파일 위치, examples <br>
+`EXEC=darknet` : main source file (int main) 명 <br>
+`OBJDIR=./obj/` : build 시 생성되는 object 파일들은 해당 경로에 출력됨 <br>
 
 `CC` : C Compiler <br>
 `NVCC=nvcc` : CUDA compiler <br>
@@ -51,7 +77,8 @@ CFLAGS=-Wall -Wno-unused-result -Wno-unknown-pragmas -Wfatal-errors -fPIC
 
 
 
-## Darknet.c (Main source)
+## darknet/src/Darknet.c (Main source)
+
 ```C++
 int main(int argc, char **argv)
 {
@@ -66,7 +93,7 @@ int main(int argc, char **argv)
     if(find_arg(argc, argv, "-nogpu")) {
         gpu_index = -1;
     }
- 
+
 #ifndef GPU
     gpu_index = -1;
 #else
@@ -74,7 +101,7 @@ int main(int argc, char **argv)
         cuda_set_device(gpu_index);
     }
 #endif
- 
+
     if (0 == strcmp(argv[1], "average")){
         average(argc, argv);
     } else if (0 == strcmp(argv[1], "yolo")){
@@ -157,76 +184,22 @@ int main(int argc, char **argv)
     return 0;
 }
 ```
-`detect` : 이미지용, `test_detector` 함수 실행(detector.c 내부에 있음)
-`detector` : 동영상용
+`detect` : 단일/멀티 이미지용, `test_detector` 함수 실행(detector.c 내부에 있음) <br>
+*Option*<br>
+`-ext_output` : 결과에 대한 상세 정보 표시<br>
+`-i 1` : Use GPU 1<br>
+`thresh 0.25 -dont_show -save_labels < list.txt` : 
+- YOLO 임계치 조정
+- 원래 25% 이상인 물체만 표시
+- 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능
+- List of Image에 대한 결과 저장 <br> <br>
+
+`detector` : 동영상용 <br> <br>
 
 
 
 ## detector.c
-```cpp
-void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh, float hier_thresh, char *outfile, int fullscreen)
-{
-    list *options = read_data_cfg(datacfg);
-    char *name_list = option_find_str(options, "names", "data/names.list");
-    char **names = get_labels(name_list);
- 
-    image **alphabet = load_alphabet();
-    network *net = load_network(cfgfile, weightfile, 0);
-    set_batch_network(net, 1);
-    srand(2222222);
-    double time;
-    char buff[256];
-    char *input = buff;
-    float nms=.45;
-    while(1){
-        if(filename){
-            strncpy(input, filename, 256);
-        } else {
-            printf("Enter Image Path: ");
-            fflush(stdout);
-            input = fgets(input, 256, stdin);
-            if(!input) return;
-            strtok(input, "\n");
-        }
-        image im = load_image_color(input,0,0);
-        image sized = letterbox_image(im, net->w, net->h);
-        //image sized = resize_image(im, net->w, net->h);
-        //image sized2 = resize_max(im, net->w);
-        //image sized = crop_image(sized2, -((net->w - sized2.w)/2), -((net->h - sized2.h)/2), net->w, net->h);
-        //resize_network(net, sized.w, sized.h);
-        layer l = net->layers[net->n-1];
- 
- 
-        float *X = sized.data;
-        time=what_time_is_it_now();
-        network_predict(net, X);
-        printf("%s: Predicted in %f seconds.\n", input, what_time_is_it_now()-time);
-        int nboxes = 0;
-        detection *dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes);
-        //printf("%d\n", nboxes);
-        //if (nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
-        if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
-        draw_detections(im, dets, nboxes, thresh, names, alphabet, l.classes);
-        free_detections(dets, nboxes);
-        if(outfile){
-            save_image(im, outfile);
-        }
-        else{
-            save_image(im, "predictions");
-#ifdef OPENCV
-            make_window("predictions", 512, 512, 0);
-            show_image(im, "predictions", 0);
-#endif
-        }
- 
-        free_image(im);
-        free_image(sized);
-        if (filename) break;
-    }
-}
-```
-
-
+`draw_detections`: detection 결과 표현, 갯수 출력, 인식 물체 이름 등 정의
 
 
 
@@ -247,31 +220,25 @@ char *backup_directory = "/home/pjreddie/backup/";
 
 
 
-
-
 ## .cfg
 ```sh
 
 ```
-
-
-batch = 64
-subdivision = 8
-- Out of memory 오류 시, subdivision 을 16, 32, 64 등으로 증가시킴
-height/width = (32의 배수, 608 or 832, 클수록 정확도 향상)
-	- class = (자신의 class 갯수로 수정)
-	- filters (class 위에 있음) = (classes + 5) * 3
-	- 다른 해상도에 대한 정확도 높힐 경우
-		- random (파일 맨 아래) = 1 
-	- Small Object(416*416으로 Resizing 했을때 16*16보다 작은 경우)
-		- layers (720번째 줄) = -1, 11
-		- stride (717번째 줄) = 4
-	- anchors = (수정 입력)
-		- anchors 계산 :
-`darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416`
-
-	- 좌우 구별 감지 원할 경우
-		- flip (17번째 줄) = 0 <br><br>
+`batch = 64` <br>
+`subdivision = 8` Out of memory 오류 시, subdivision 을 16, 32, 64 등으로 증가시킴 <br>
+`height/width = `(32의 배수, 608 or 832, 클수록 정확도 향상) <br>
+`class = (자신의 class 갯수로 수정)` <br>
+`filters (class 위에 있음) = (classes + 5) * 3` <br>
+- 다른 해상도에 대한 정확도 높힐 경우 <br>
+- random (파일 맨 아래) = 1  <br>
+`Small Object(416*416으로 Resizing 했을때 16*16보다 작은 경우)` <br>
+`layers (720번째 줄) = -1, 11` <br>
+`stride (717번째 줄) = 4` <br>
+`anchors = (수정 입력)` <br>
+- anchors 계산 : <br>
+`darknet.exe detector calc_anchors data/obj.data -num_of_clusters 9 -width 416 -height 416` <br>
+`flip (17번째 줄) = 0` : 좌우 구별 감지 원할 경우
+ <br> <br>
 
 
 

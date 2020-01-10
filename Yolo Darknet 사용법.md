@@ -5,18 +5,25 @@
 [Yolo Darknet page](https://pjreddie.com/darknet/yolo/)
 
 
+
 ### Pre-requirement
-- OpenCV
-- CUDA<br>
+- OpenCV 2.4 이상
+- CUDA
+- cuDNN <br>
 
 ### Install
-- [소스 확인](https://github.com/pjreddie/darknet)
+- 소스 확인
+[pjreddie](https://github.com/pjreddie/darknet)
+[AlexeyAB](https://github.com/AlexeyAB/darknet)
+
 - 폴더 구조
 ```sh
 darknet
   |
+  |- backup/
   |- cfg/
   |- data/
+  |- examples/
   |- LICENSE
   |- Makefile
   |- obj/
