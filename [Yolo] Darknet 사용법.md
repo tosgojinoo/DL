@@ -4,13 +4,13 @@
 + [Yolo Darknet page](https://pjreddie.com/darknet/yolo/)
 + yolo v3 저자 [pjreddie](https://github.com/pjreddie/darknet)
 + 부가기능 사용시 [AlexeyAB](https://github.com/AlexeyAB/darknet)
-
+<br>
 
 ## Pre-requirement
 + OpenCV 2.4 이상
 + CUDA
-+ cuDNN <br>
-
++ cuDNN 
+<br>
 
 ## 실행
 ### 기본
@@ -19,29 +19,30 @@ git clone https://github.com/pjreddie/darknet
 cd darknet
 make
 ```
+<br>
 ### weight 받아올 경우
 ```sh
 wget https://pjreddie.com/media/files/yolov2.weights
 ./darknet detector test cfg/coco.data cfg/yolo.cfg yolo.weights data/dog.jpg
 또는
 ./darknet detect cfg/yolov2.cfg yolov2.weights data/dog.jpg -thresh 0
-``
+```
 
 ### 폴더 구조
 ```sh
 darknet
   |
-  |+ backup/
-  |+ cfg/
-  |+ data/
-  |+ examples/
-  |+ LICENSE
-  |+ Makefile
-  |+ obj/
-  |+ README.md
-  |+ results/
-  |+ scripts/ 
-  |+ src/
+  |- backup/
+  |- cfg/
+  |- data/
+  |- examples/
+  |- LICENSE
+  |- Makefile
+  |- obj/
+  |- README.md
+  |- results/
+  |- scripts/ 
+  |- src/
 ```
 + Makefile
 	+ CUDA 설치 시, GPU=1
@@ -58,16 +59,16 @@ darknet
 + 완료되면, darknet 실행파일 생성
 
 #### 참고) make & makefile
-shell 에서 컴파일 시, `make` 명령어로 `makefile` 컴파일 가능 <br>
-`make`는 파일 간의 종속관계를 파악하여 `makefile`에 적힌 대로 컴파일러에 명령, shell 명령이 순차적으로 실행될 수 있게 함 <br><br>
-장점은,
-+ 각 파일에 대한 반복적 명령의 자동화로 인한 시간 절약
-+ 프로그램 종속 구조 빠르게 파악하여, 관리 용이
-+ 단순 반복 작업, 재작성 최소화
++ shell 에서 컴파일 시, `make` 명령어로 `makefile` 컴파일 가능 
++ `make`는 파일 간의 종속관계를 파악하여 `makefile`에 적힌 대로 컴파일러에 명령, shell 명령이 순차적으로 실행될 수 있게 함 
++ 장점은,
+	+ 각 파일에 대한 반복적 명령의 자동화로 인한 시간 절약
+	+ 프로그램 종속 구조 빠르게 파악하여, 관리 용이
+	+ 단순 반복 작업, 재작성 최소화
 
-`make` : 파일 관리 유틸리티 <br>
-`makefile` : 기술파일(script) <br><br>
-
++ `make` : 파일 관리 유틸리티 
++ `makefile` : 기술파일(script) 
+<br>
 
 ### Train
 + Yolo Darknet 폴더 안 scr/yolo.c 파일 내용
@@ -77,9 +78,9 @@ char *train_images = "/data/voc/train.txt";
 char *backup_directory = "/home/pjreddie/backup/";
 ```
 
-`char *voc_names[]` : 클래스 이름 설정 변수 <br>
-`char *train_images` : 학습할 image들의 list.txt파일 위치 <br>
-`char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일 <br><br>
+	+ `char *voc_names[]` : 클래스 이름 설정 변수 
+	+ `char *train_images` : 학습할 image들의 list.txt파일 위치 
+	+ `char *backup_directory` : 학습을 하면서 중간결과들을 저장해놓는 폴더 위치, 최종 가중치 파일 저장 위치 동일 
 
 + 용도에 맞게 위 내용 변경
 + 딥러닝 모델 생성(cfg 파일) 또는 수정
@@ -166,11 +167,11 @@ $ ./obj_test.sh
 ./darknet detector test .data .cfg .weights -thresh THRESH OPTION
 ./darknet detector test cfg/yolo.cfg yolo.weights data/dog.jpg
 ```
-Option<br>
-`-ext_output` : Output coordinates<br>
-`-i 1` : Use GPU 1<br>
-`thresh 0.25 -dont_show -save_labels < list.txt` : List of Image에 대한 결과 저장<br>
-<br>
+	+ *Option*
+		+ `-ext_output` : Output coordinates
+		+ `-i 1` : Use GPU 1
+		+ `thresh 0.25 -dont_show -save_labels < list.txt` : List of Image에 대한 결과 저장
+
 
 + Video
 ```sh
@@ -178,19 +179,20 @@ Option<br>
 ./darknet detector demo cfg/yolo.cfg yolo.weights -c <number> : 카메라 index number
 ./darknet detector demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
 ```
-Option<br>
-	`-c 0` : WebCam 0<br>
-	`http://주소` : Net-videocam<br>
-	`-out_filename OUT.videofile` : 결과 저장<br>
-<br>
+	+ *Option*
+		+ `-c 0` : WebCam 0
+		+ `http://주소` : Net-videocam
+		+ `-out_filename OUT.videofile` : 결과 저장
+
 
 + Check accuracy mAP@IoU=75
 ```sh
 ./darknet detector map .data .cfg .weights -iou_thresh 0.75
 ```
+<br>
 
 ### log
-학습시 생성된 log 확인
+학습시 생성된 log 확인 
 [마지막 부분]
 + Region 82
 	+ 가장 큰 Mask, Prediction Scale 을 이용하는 레이어이지만 작은 객체를 예측 할 수 있음
@@ -216,6 +218,7 @@ Option<br>
 	+ 적은 데이터의 경우 loss 값이 0.6 정도나 그 이하까지 감소 가능
 	+ 더 이상 Loss 값이 떨어지지 않을 때 학습 정지
 	+ 권장 iteration (= 클래스 수 * 2000) 만큼 학습 추천
+<br>
 
 
 
