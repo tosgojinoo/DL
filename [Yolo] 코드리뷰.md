@@ -47,14 +47,14 @@ makefile 확인하여 main 포함된 소스코드 확인 가능 <br>
 
 ## darknet/src/Darknet.c (Main source)
 `detect` : 단일/멀티 이미지용, `test_detector` 함수 실행(detector.c 내부에 있음) <br>
-&nbsp;*Option*<br>
-&nbsp;`-ext_output` : 결과에 대한 상세 정보 표시<br>
-&nbsp;`-i 1` : Use GPU 1 <br>
-&nbsp;`thresh 0.25 -dont_show -save_labels < list.txt` :  <br>
-&nbsp;&nbsp;    - YOLO 임계치 조정 <br>
-&nbsp;&nbsp;    - 원래 25% 이상인 물체만 표시 <br>
-&nbsp;&nbsp;    - 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능 <br>
-&nbsp;&nbsp;    - List of Image에 대한 결과 저장 <br> <br>
+  *Option*<br>
+  + `-ext_output` : 결과에 대한 상세 정보 표시<br>
+  + `-i 1` : Use GPU 1 <br>
+  + `thresh 0.25 -dont_show -save_labels < list.txt` :  <br>
+  + YOLO 임계치 조정 <br>
+  + 원래 25% 이상인 물체만 표시 <br>
+  + 해당 옵션을 이용하여 0% 이상인 모든 물체를 표시하게 하거나, 50% 이상의 물체만 탐지를 하는 등의 설정 가능 <br>
+  + List of Image에 대한 결과 저장 <br> <br>
 
 `detector` : 동영상용 <br> <br>
 
