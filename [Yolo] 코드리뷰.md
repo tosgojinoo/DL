@@ -130,7 +130,7 @@ Annotation 에 포함되어 있는, 검출 대상 목록 <br>
 
 
 ## train/valid.txt
-학습 대상 또는 validation 이미지 경로가 담긴 리스트
+학습 대상 또는 validation 이미지 경로가 담긴 리스트 <br>
 train.txt 생성 코드
 ```python
 import glob 
@@ -143,7 +143,6 @@ def file_path_save():
 if __name__ == '__main__':
     file_path_save()
 ```
- <br>
 
 
 ## images (폴더)
@@ -158,11 +157,10 @@ train/valid image 필요 <br>
 각 이미지마다 주석들이 담긴 텍스트 파일 필요 <br>
 
 
-
 ## weight file
-Pre-trained model 또는 기본적으로 darknet53.conv.74 등의 가중치 파일
-Fine-tuning을 위해 맨 아래 레이어를 제거(AlexeyAB darknet에 내장)한 가중치 파일을 사용할 수도 있음
-partial 을 이용하여 마지막 레이어 삭제 후 가중치 파일 생성 <br>
+Pre-trained model 또는 기본적으로 darknet53.conv.74 등의 가중치 파일 <br>
+Fine-tuning을 위해 맨 아래 레이어를 제거(AlexeyAB darknet에 내장)한 가중치 파일을 사용할 수도 있음 <br>
+partial 을 이용하여 마지막 레이어 삭제 후 가중치 파일 생성 <br> <br>
 
 
 
