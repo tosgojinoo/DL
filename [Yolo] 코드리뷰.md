@@ -21,10 +21,11 @@ darknet
   |- src/
 ```
 `cfg`(configure) : 모델 튜닝, 데이터 적용 
-- coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등
-`data` : 분석 대상
-- coco.names : class 확인 가능 (80개)
-
+- coco.data, yolov3.cfg(v3), yolo-obj.cfg(v2), rnn.cfg 등 <br>
+`data` : bounding box 그릴때 필요한 label들의 폰트, label list, test image
+- coco.names : 기본 데이터셋인 coco.data 의 class 확인 가능 (80개) <br>
+`src`(source) : c 코드, 헤더파일 등
+- image.c : bounding box의 좌표에 대한 코드 <br>
 
 
 ## Makefile
