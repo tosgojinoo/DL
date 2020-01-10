@@ -20,6 +20,7 @@ cd darknet
 make
 ```
 <br>
+
 ### weight 받아올 경우
 ```sh
 wget https://pjreddie.com/media/files/yolov2.weights
