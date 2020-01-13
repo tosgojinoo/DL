@@ -1,4 +1,4 @@
-# [Yolo v3] Object Detection
+# [Yolo v3] Source Code
 
 ## General
 - [소스 확인](https://github.com/pjreddie/darknet)

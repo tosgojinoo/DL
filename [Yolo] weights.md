@@ -1,4 +1,4 @@
-# [Yolo v3] weights
+# [Yolo] weights
 
 ## Downloead
 

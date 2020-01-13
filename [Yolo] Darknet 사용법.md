@@ -1,4 +1,4 @@
-# Yolo Darknet
+# [Yolo] Darknet
 
 ## 참고
 + [Yolo Darknet page](https://pjreddie.com/darknet/yolo/)
@@ -28,6 +28,7 @@ wget https://pjreddie.com/media/files/yolov2.weights
 또는
 ./darknet detect cfg/yolov2.cfg yolov2.weights data/dog.jpg -thresh 0
 ```
+<br>
 
 ### 폴더 구조
 ```sh
@@ -164,8 +165,10 @@ $ ./obj_test.sh
 ```
 
 + Image
+(이미지 파일 실행 후) 
 ```sh
 ./darknet detector test .data .cfg .weights -thresh THRESH OPTION
+or
 ./darknet detector test cfg/yolo.cfg yolo.weights data/dog.jpg
 ```
 + 
@@ -176,9 +179,12 @@ $ ./obj_test.sh
 
 
 + Video
+(동영상 파일 실행)
 ```sh
 ./darknet detector demo .data .cfg .weights .videofile OPTION
+or
 ./darknet detector demo cfg/yolo.cfg yolo.weights -c <number> : 카메라 index number
+or
 ./darknet detector demo cfg/yolo.cfg yolo.wegiths test.mp4 : 동영상에 대한 테스트
 ```
 + 
