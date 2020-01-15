@@ -6,6 +6,29 @@
 + 부가기능 사용시 [AlexeyAB](https://github.com/AlexeyAB/darknet)
 <br>
 
+## Yolo
++ You Only Look Once
++ Convolutional layers 들만 사용하여 fully convolutional network(FCN) 구성
+    + FCN 이므로 입력이미지 크기가 속도에 영향 주지 않음
+    + 하지만, 문제 발생 방지를 위해 일정한 입력 크기 유지 필요
++ Skip connections 와 upsampling* layer 들을 포함해 총 75개의 convolutional layer 들로 구성
++ Pooling 은 사용되지 않음
++ feature map 을 downsample 하기 위해서 두개의 stride를 가진 convolutional layer 사용
+    + pooling 으로 인해 low-lever feature 들이 자주 loss 되는 것 방지
++ batch 로 이미지 처리시, 모든 이미지들의 높이/너비 고정 필요
+    + GPU로 병렬처리 가능, 속도 향상
+    + 여러 이미지를 하나의 큰 batch로 연결시 필요 (= 여러개 Pytorch tensor들을 하나로 연결)
++ stride -> 이미지 downsampling
+<br>
+
+## Anchor Boxes
++ Bounding box의 높이/너비는 training시에 불안정한 gradient를 발생시킴
++ 그래서, 대부분 log-space transforms 예측, 또는 anchors 라고 불리는 미리 정의된 bounding box 사용
++ transforms -> anchor box 적용 -> 예측값 산출
++ (YOLOv3) 3개 anchors -> 각 cell마다 3 개의 bounding box 예측
++ 예) 개를 detect하는 것에 책임을 지게 될 bounding box는 ground truth box와 함께 가장 높은 IoU를 가진 anchor가 될 것임
+<br>
+
 ## Pre-requirement
 + OpenCV 2.4 이상
 + CUDA
