@@ -1,5 +1,5 @@
 # [Yolo v3] Source Code
-[[TOC]]
+[TOC]
 
 ## 공통
 ### (obj).cfg
