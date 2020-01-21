@@ -1,4 +1,19 @@
-# [Yolo] Darknet
+# [Yolo] Darknet with C
+
+- [[Yolo] Darknet with C](#-yolo--darknet-with-c)
+	* [참고](#--)
+	* [Yolo](#yolo)
+	* [Anchor Boxes](#anchor-boxes)
+	* [Pre-requirement](#pre-requirement)
+	* [실행](#--)
+	  + [기본](#--)
+	  + [weight 받아올 경우](#weight-------)
+	  + [폴더 구조](#-----)
+	    - [참고) make & makefile](#----make---makefile)
+	  + [Train](#train)
+	  + [Test](#test)
+	  + [log](#log)
+  
 
 ## 참고
 + [Yolo Darknet page](https://pjreddie.com/darknet/yolo/)
