@@ -1,15 +1,15 @@
 # [Yolo] Darknet with C
 
 - [[Yolo] Darknet with C](#-yolo--darknet-with-c)
-	* [참고](#--)
+	* [참고](#참고)
 	* [Yolo](#yolo)
 	* [Anchor Boxes](#anchor-boxes)
 	* [Pre-requirement](#pre-requirement)
-	* [실행](#--)
-	  + [기본](#--)
-	  + [weight 받아올 경우](#weight-------)
-	  + [폴더 구조](#-----)
-	    - [참고) make & makefile](#----make---makefile)
+	* [실행](#실행)
+	  + [기본](#기본)
+	  + [weight 받아올 경우](#weight-받아올-경우)
+	  + [폴더 구조](#폴더-구조)
+	    - [[참고] make & makefile](#--참고--make---makefile)
 	  + [Train](#train)
 	  + [Test](#test)
 	  + [log](#log)
@@ -98,7 +98,7 @@ darknet
 + 설정 완료 후, 터미널창에 make 명령어 입력하여 코드 Complile
 + 완료되면, darknet 실행파일 생성
 
-#### 참고) make & makefile
+#### [참고] make & makefile
 + shell 에서 컴파일 시, `make` 명령어로 `makefile` 컴파일 가능 
 + `make`는 파일 간의 종속관계를 파악하여 `makefile`에 적힌 대로 컴파일러에 명령, shell 명령이 순차적으로 실행될 수 있게 함 
 + 장점은,
